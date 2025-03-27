@@ -1,0 +1,53 @@
+<nav class="fixed border-b-2 z-[5] border-zinc-600 bg-[#1B1B1B] border-black flex justify-between items-center w-full h-[70px]">
+    <a href="/studio/channel/<%= user.handle %>" class="flex items-center justify-center">
+        <h1 class="font-semibold text-2xl">Studio</h1>
+    </a>
+    <div class="search_box flex gap-3">
+        <form class="search w-[500px] overflow-hidden flex h-[40px] rounded-lg bg-zinc-800">
+            <input type="text" class="w-full outline-none bg-zinc-800" placeholder="Search">
+            <button type="submit" class="cursor-pointer bg-[#1b1b1b] w-[45px] rounded-lg border-[2px] border-zinc-800">
+                <i class="ri-search-line"></i>
+            </button>
+        </form>
+    </div>
+    <div>
+        <% if(user) { %>
+            <div class="flex gap-5">
+                <a href="/" type="button" class="notification_btn relative cursor-pointer hover:bg-zinc-800 h-[40px] w-[40px] flex items-center justify-center border-2 border-zinc-800 rounded-lg">
+                    <i class="ri-notification-4-fill"></i>
+                    <% if(user.notifications.length === 0) { %>
+                        <span></span>
+                    <% } else { %>
+                        <span class="absolute text-[10px] bg-red-500 h-[20px] w-[20px] rounded-full flex items-center justify-center -top-2 -right-2"><%= user.notifications.length %></span>
+                    <% } %>
+                    </a>
+                <button type="button" class="profile_button">
+                    <img class="w-[40px] object-cover h-[40px] rounded-full cursor-pointer hover:border-1 transition-all border-blue-500" src="<%= user.logoURL %>" alt="">
+                </button>
+                <div class="profile_box -right-[100%] top-[80px] transition-all fixed">
+                    <%- include('profilebox', { user }) %>
+                </div>
+            </div>
+        <% } else { %>
+            <a href="/auth/google" class="h-[38px] w-[100px] rounded-lg border-2 border-zinc-800 flex items-center gap-1 hover:bg-zinc-800 transition-all justify-center block">
+                <i class="ri-user-line"></i>
+                Sign in
+            </a>
+        <% } %>
+    </div>
+</nav>
+
+<script>
+    const profile_button = document.querySelector('.profile_button');
+    const profile_box = document.querySelector('.profile_box');
+    profile_button.addEventListener('click', () => {
+        profile_box.classList.toggle('active');
+    })
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.profile_button') &&!event.target.closest('.profile_box')) {
+            profile_box.classList.remove('active');
+        }
+    })
+
+</script>

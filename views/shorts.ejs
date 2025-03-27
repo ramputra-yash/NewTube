@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube | Shorts</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Century Gothic";
+        color: white;
+    }
+    body {
+        background: #1b1b1b;
+    }
+    body::-webkit-scrollbar {
+        background: #1b1b1b;
+        width: 10px;
+        border-left: 1px solid black;
+    }
+    body::-webkit-scrollbar-thumb {
+        background-color: rgb(54, 54, 54);
+        border-radius: 2px;
+        border-left: 1px solid black;
+    }
+    nav {
+        padding: 0 2%;
+    }
+    nav input {
+        padding: 0 15px;
+    }
+    .profile_box.active {
+        right: 10px;
+    }
+    .profile_page {
+        padding-top: 80px;
+        padding-left: 80px;
+        padding-right: 10px;
+        margin-bottom: 100px;
+    }
+    </style>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="index_main_div flex flex-col w-full h-screen">
+        <%- include('components/navbar', { user }) %>
+        <div class="w-full h-full">
+            <%- include('components/sidebar') %>
+            <div class="shorts_page flex items-center justify-center w-full h-full" style="padding-top: 40px;">
+                <%- include('videos/short') %>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+</script>
+</html>

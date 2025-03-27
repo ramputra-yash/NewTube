@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube</title>
+    <link rel="stylesheet" href="../css/watch.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="watch_main_div flex flex-col w-full h-screen">
+        <%- include('components/navbar') %>
+        <div class="w-full h-full">
+            <%- include('components/sidebar') %>
+            <div class="watch_videos flex gap-3 w-full h-auto">
+                <div class="watch_video w-[68%]">
+                    <%- include('videos/watch_video', {video}) %>
+                    <h1 class="text-[18px]" style="padding: 10px;"><%= video.title %></h1>
+                    <div class="flex items-center border-t-1 border-zinc-800 border-b-1 justify-between" style="padding: 15px 10px;">
+                        <div class="flex gap-5 items-center">
+                            <a href="/<%= video.channel.handle %>" class="flex gap-3">
+                                <img class="w-[45px] h-[45px] object-cover rounded-full" src="<%= video.channel.logoURL %>" alt="">
+                                <div>
+                                    <h1><%= video.channel.name %></h1>
+                                    <p class="text-sm" style="color: #a1a1a1;"><%= video.channel.subscribers.length %> subscriber</p>
+                                </div>
+                            </a>
+                            <form method="post" action="/watch/<%= video._id %>/subscribe">
+                                <% if(video.channel.subscribers.includes(user._id)) { %>
+                                    <button type="submit" class="bg-zinc-700 flex gap-2 transition-all hover:bg-zinc-500 rounded-full" style="padding: 8px 20px;">
+                                        Unsubscribe
+                                        <i class="ri-notification-off-line"></i>
+                                    </button>
+                                    <% } else { %>
+                                    <button type="submit" class="bg-red-700 flex gap-2 transition-all hover:bg-red-500 rounded-full" style="padding: 8px 20px;">
+                                        Subscribe
+                                        <i class="ri-notification-2-line"></i>
+                                    </button>
+                                <% } %>
+                            </form>
+                        </div>
+                        <div class="text-xl items-center flex gap-5">
+                            <div class="flex bg-zinc-800 gap-3 items-center rounded-full" style="padding: 5px;">
+                                <% if(video.likes.includes(user._id)) { %>
+                                    <a href="/watch/<%= video._id %>/like" class="bg-blue-700 hover:bg-zinc-900 transition-all h-[40px] flex w-[40px] items-center justify-center block rounded-full">
+                                        <i class="ri-thumb-up-fill"></i>
+                                    </a>
+                                <% } else { %>
+                                    <a href="/watch/<%= video._id %>/like" class="bg-zinc-900 hover:bg-blue-700 transition-all h-[40px] flex w-[40px] items-center justify-center block rounded-full">
+                                        <i class="ri-thumb-up-line"></i>
+                                        </a>
+                                <% } %>
+                                <span style="color: #ccc;"><%= video.likes.length %></span>
+                                <% if(video.dislikes.includes(user._id)) { %>
+                                    <a href="/watch/<%= video._id %>/dislike" class="bg-red-700 hover:bg-zinc-900 transition-all h-[40px] flex w-[40px] items-center justify-center block rounded-full">
+                                        <i class="ri-thumb-down-fill"></i>
+                                    </a>
+                                <% } else { %>
+                                    <a href="/watch/<%= video._id %>/dislike" class="bg-zinc-900 hover:bg-red-700 transition-all h-[40px] flex w-[40px] items-center justify-center block rounded-full">
+                                        <i class="ri-thumb-down-line"></i>
+                                    </a>
+                                <% } %>
+                            </div>
+                            <a href="https://wa.me/?text=http://localhost:3000/watch/<%= video._id %>" target="_blank" class="bg-zinc-900 h-[50px] hover:bg-green-600 transition-all flex w-[50px] items-center justify-center block rounded-full border-[5px] border-zinc-800">
+                                <i class="ri-share-fill"></i>
+                            </a>
+                            <a href="../videos/<%= video.filename %>" download="<%= video.title %>" class="bg-zinc-900 h-[50px] hover:bg-blue-400 transition-all flex w-[50px] items-center justify-center block rounded-full border-[5px] border-zinc-800">
+                                <i class="ri-download-line"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <%- include('components/watch_desc_box', { video, getTimestamp }) %>
+                    <h1 class="text-2xl" style="padding: 10px;"><%= video.comments.length %> Comments</h1>
+                    <%- include('components/my_comment_box', { user: user || '' , video}) %>
+                    <%- include('components/all_comments', { comments, getTimestamp, user: user || '', video }) %>
+                </div>
+                <div class="side_videos flex flex-col gap-2 w-[32%]">
+                    <% AllVideos.reverse().forEach((item) => { %>
+                        <%- include('videos/watch_side_video', {item, getTimestamp}) %>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+    })
+    window.addEventListener('beforeunload', () => {
+        sessionStorage.setItem('scrollPos', window.scrollY);
+    });
+
+    // Page reload hone se pehle hi scroll position restore karo
+    const scrollPos = sessionStorage.getItem('scrollPos');
+    if (scrollPos) {
+        window.scrollTo(0, scrollPos);
+    }
+
+    // Optional: Page load hone ke baad session clean karna (agar ek hi baar chahiye)
+    window.addEventListener('load', () => {
+        sessionStorage.removeItem('scrollPos');
+    });
+
+    document.querySelector('button[type="submit"]').addEventListener('click', () => {
+        document.querySelector('form').submit();
+    })
+
+
+</script>
+</html>

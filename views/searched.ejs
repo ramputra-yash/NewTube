@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="index_main_div flex flex-col w-full h-screen">
+        <%- include('components/navbar', { user }) %>
+        <div class="w-full h-full">
+            <%- include('components/sidebar', { user }) %>
+                <% if(videos.length === 0) { %>
+                    <div class="pt-[80px] pl-[80px]">
+                        <a href="/" class="text-blue-300"> <i class="ri-arrow-left-line"></i> Go Back</a>
+                        <h1 class="font-semibold text-2xl">Not Result Found of <%= query %></h1>
+                    </div>
+                <% } else { %>
+                    <div class="pt-[80px] pl-[80px]">
+                        <a href="/" class="text-blue-300"> <i class="ri-arrow-left-line"></i> Go Back</a>
+                        <h1 class="text-2xl font-semibold py-3">Results of <%= query %></h1>
+                    </div>
+                    <div class="index_videos" style="padding-top: 10px;">
+                    <% videos.reverse().forEach((item) => { %>
+                        <%- include('videos/index_video', {item}) %>
+                    <% }) %>
+                    </div>
+                <% } %>
+        </div>
+    </div>
+</body>
+</html>

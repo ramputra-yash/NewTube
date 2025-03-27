@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Century Gothic";
+        color: white;
+    }
+    body {
+        background: #1b1b1b;
+    }
+    body::-webkit-scrollbar {
+        background: #1b1b1b;
+        width: 10px;
+        border-left: 1px solid black;
+    }
+    body::-webkit-scrollbar-thumb {
+        background-color: rgb(54, 54, 54);
+        border-radius: 2px;
+        border-left: 1px solid black;
+    }
+    nav {
+        padding: 0 2%;
+    }
+    nav input {
+        padding: 0 15px;
+    }
+    .profile_box.active {
+        right: 10px;
+    }
+    .profile_page {
+        padding-top: 80px;
+        padding-left: 80px;
+        padding-right: 10px;
+        margin-bottom: 100px;
+    }
+    .search_input {
+        transition: .5s;
+    }
+    .search_input.active {
+        width: 100%;
+        padding: 0 15px;
+        border-top-left-radius: 20px;
+    }
+    .search_btn {
+        width: 45px;
+        height: 45px;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+        cursor: pointer;
+        background: rgb(5, 196, 5);
+        transition: .5s;
+    }
+    .search_btn.active {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        width: 50px;
+        background: red;
+    }
+    .video-shorts a {
+        padding: 8px 15px;
+        color: #ccc;
+        cursor: pointer;
+    }
+    .video-shorts a.active {
+        border-bottom: 2px solid white;
+        color: white;
+        text-decoration: none;
+        display: block;
+    }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <div class="index_main_div flex flex-col w-full h-screen">
+        <%- include('../components/navbar') %>
+        <div class="w-full h-full">
+            <div class="profile_page w-full h-full">
+                <div class="w-full h-[200px] rounded-[20px] overflow-hidden bg-red-500">
+                    <img class="w-full h-full object-cover bg-center" src="https://img.freepik.com/premium-vector/abstract-technology-background-white-blue-gradient-modern-futuristic-blue-background-news-report-banner-cover-design_115973-8810.jpg" alt="">
+                </div>
+                <div class="profile_page_det items-center gap-8 flex" style="padding: 20px 30px;">
+                    <img class="w-[200px] object-cover rounded-full h-[200px]" src="<%= otherUser.logoURL %>" alt="">
+                    <div class="flex flex-col gap-2">
+                        <p class="text-5xl font-semibold"><%= otherUser.name %></p>
+                        <div>
+                            <%= otherUser.handle %> • <span style="color: #ccc;"> <%= otherUser.subscribers.length %> subscribers • <%= otherUser.videos.length %> video</span>
+                        </div>
+                        <button type="button" class="about_channel_btn bg-zinc-800 cursor-pointer w-[fit-content] rounded-full" style="padding: 5px 15px;">More about this Channel</button>
+                    </div>
+                    <div class="about_channel" style="display: none;">
+                        <%- include('../components/about_channel', { user: otherUser, videos }) %>
+                    </div>
+                </div>
+                <div class="flex gap-5 video-shorts border-b-2 border-zinc-800" style="padding: 0 20px;">
+                    <a class="videos active">Videos</a>
+                    <a class="shorts">Shorts</a>
+                </div>
+                <div class="videos_details">
+                    <div class="videos_box" style="display: block;">
+                        <%- include('../components/profile_videos', {videos, getTimestamp}) %>
+                    </div>
+                    <div class="shorts_box" style="display: none;">
+                        <%- include('../components/profile_shorts') %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector('.about_channel_btn').addEventListener('click', () => {
+        document.querySelector('.about_channel').style.display = "block";
+    })
+
+    document.querySelector('.search_btn').addEventListener('click', () => {
+        document.querySelector('.search_input').classList.toggle('active');
+        document.querySelector('.search_btn').classList.toggle('active');
+
+        if(document.querySelector('.search_btn').classList.contains('active')) {
+            document.querySelector('.search_btn i').className = 'ri-close-line';
+            document.querySelector('.search_input').focus();
+        } else {
+            document.querySelector('.search_btn i').className = 'ri-search-line text-xl';
+            document.querySelector('.search_input').value = "";
+        }
+
+    })
+
+    document.querySelectorAll('.video-shorts a').forEach((item) => {
+        item.addEventListener('click', (e) => {
+            document.querySelectorAll('.video-shorts a').forEach((item) => {
+                item.classList.remove('active');
+            })
+            if(e.currentTarget.className === "shorts"){
+                document.querySelector('.videos_box').style.display = 'none';
+                document.querySelector('.shorts_box').style.display = 'block';
+            } else if(e.currentTarget.className === "videos") {
+                document.querySelector('.shorts_box').style.display = 'none';
+                document.querySelector('.videos_box').style.display = 'block';
+            }
+            item.classList.add('active');
+        })
+    })
+
+
+</script>
+</html>

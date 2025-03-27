@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Century Gothic";
+    color: white;
+}
+body {
+    background: #1b1b1b;
+}
+body::-webkit-scrollbar {
+    background: #1b1b1b;
+    width: 10px;
+    border-left: 1px solid black;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(54, 54, 54);
+    border-radius: 2px;
+    border-left: 1px solid black;
+}
+nav {
+    padding: 0 2%;
+}
+nav input {
+    padding: 0 15px;
+    border-bottom: none;
+}
+.profile_box.active {
+    right: 10px;
+}
+.watch_videos {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-right: 10px;
+    padding-top: 80px;
+    padding-left: 80px;
+}
+@media (max-width:800px) {
+    .watch_videos {
+        flex-direction: column;
+    }
+}
+@media (max-width:600px) {
+
+}

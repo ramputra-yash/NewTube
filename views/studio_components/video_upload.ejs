@@ -1,0 +1,75 @@
+<style>
+    .Upload_video_box::-webkit-scrollbar {
+        width: 10px;
+        background: none;
+    }
+    .Upload_video_box::-webkit-scrollbar-thumb {
+        background: #363636;
+    }
+</style>
+<form action="/studio/channel/<%= user.handle %>/video/upload" method="post" enctype="multipart/form-data" class="upload_video_box_main fixed z-[7] top-0 left-0 w-full h-screen flex items-center justify-center bg-zinc-800/50 backdrop-blur-lg">
+     <div action="" class="form flex hidden flex-col w-1/2 h-[auto] pb-2 rounded-lg bg-zinc-900">
+        <div class="flex items-center justify-between p-4">
+            <h1>Upload Video</h1>
+            <button class="close_btn hover:text-red-500 transition-all text-white ri-close-line" type="button"></button>
+        </div>
+        <hr class="bg-zinc-800 border-none h-[1px] w-full">
+        <div class="Upload_video_box flex flex-col h-full w-full overflow-y-auto">
+            <h1 class="p-4">Details</h1>
+            <div class="flex gap-2 px-4 py-0">
+                <div class="flex flex-col gap-2 w-[60%]">
+                    <div class="w-full flex flex-col gap-1 rounded-lg p-2 px-3 border-2 border-zinc-700">
+                        <p class="text-sm text-zinc-400">Title (required) </p>
+                        <textarea class="video_title w-full resize-none bg-zinc-900 outline-none" name="title" id=""></textarea>
+                    </div>
+                    <div class="w-full flex flex-col gap-1 rounded-lg p-2 px-3 border-2 border-zinc-700">
+                        <p class="text-sm text-zinc-400">Description </p>
+                        <textarea class="video_description w-full resize-none bg-zinc-900 outline-none" rows="5" name="description" id=""></textarea>
+                    </div>
+                </div>
+                <div class="w-[40%] bg-zinc-800/50 flex flex-col rounded-lg overflow-hidden h-full">
+                    <video controls class="rounded-lg" src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4"></video>
+                    <div class="flex flex-col p-2 px-4">
+                        <p class="text-sm text-zinc-400">File name</p>
+                        <p class="text-[15px]">File Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 w-full p-5">
+                <button class="bg-blue-600 px-[40px] rounded-lg py-[10px]">Publish</button>
+            </div>
+        </div>
+    </div>
+    <%- include('upload_video_box') %>
+</form>
+<script>
+
+    let checkCreateVideo = localStorage.getItem('video_upload_check');
+
+    if(checkCreateVideo) {
+        document.querySelector('.upload_video_box_main').classList.add('open_box');
+        localStorage.removeItem('video_upload_check');
+    }
+
+    document.querySelector('.close_btn').addEventListener('click', () => {
+        document.querySelector('.upload_video_box_main').classList.remove('open_box')
+    })
+
+    document.querySelector(".select_file_btn").addEventListener('click', () => {
+        document.querySelector('.upload_file').click();
+    })
+
+    document.querySelector('.upload_file').addEventListener('change', () => {
+        const file = document.querySelector('.upload_file').files[0];
+        
+        if(file && file.type.startsWith('video/')) {
+            document.querySelector('.upload_video_box').classList.add('hidden')
+            document.querySelector('.upload_video_box_main .form').classList.remove('hidden');
+            document.querySelector('.video_title').textContent = file.name;
+            document.querySelector('video').src = URL.createObjectURL(file)
+        } else {
+            alert('Please select a valid video file!');
+        }
+
+    })
+</script>

@@ -1,0 +1,42 @@
+<style>
+    .watch_desc {
+        max-height: auto;
+    }
+    .watch_desc_title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        color: white;
+        white-space: break-spaces;
+        cursor: pointer;
+    }
+    .watch_desc.active .watch_desc_title {
+        overflow: visible;
+        text-overflow: clip;
+        display: inline;
+        -webkit-line-clamp: none;
+        -webkit-box-orient: horizontal;
+        color: initial;
+        color: white;
+        white-space: normal;
+        cursor: text;
+    }
+    .watch_desc.active i {
+        transform: rotate(180deg);
+    } 
+</style>
+<div class="watch_desc transition-all w-full flex flex-col gap-2 bg-zinc-800 rounded-lg" style="margin-top: 15px;padding: 10px 15px;">
+    <p class="text-sm flex items-center justify-between" style="color: #ccc;"><%= video.viewsCount.length %> views • <%= getTimestamp(video.createdAt) %>
+        <i class="ri-arrow-down-s-line cursor-pointer transition-all" style="color: #ccc;"></i>
+    </p>
+    <p class="watch_desc_title w-full"><%= video.description %></p>
+</div>
+<script>
+
+    document.querySelector('.ri-arrow-down-s-line').addEventListener('click', () => {
+        document.querySelector('.watch_desc').classList.toggle('active')
+    })
+
+</script>

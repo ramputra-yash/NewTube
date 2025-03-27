@@ -1,0 +1,20 @@
+<style>
+    .profile_videos {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(auto-fit, auto-fit);
+    row-gap: 10px;
+    column-gap: 10px;
+}
+</style>
+<div class="profile_videos">
+    <% videos.reverse().forEach((item) => { %>
+        <%- include('../videos/profile_video', {item, getTimestamp}) %>
+    <% }) %>
+</div>

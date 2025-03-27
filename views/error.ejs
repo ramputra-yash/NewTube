@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
+    <style>
+        * {
+            color: rgb(131, 131, 131);
+        }
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: 2px solid rgb(131, 131, 131);
+            bottom: 100px;
+        }
+        a::before {
+            position: absolute;
+            transition: .5s;
+            content: "";
+            height: 100%;
+            width: 100%;
+            background: red;
+            display: block;
+            z-index: -1;
+            border-radius: 100px;
+            left: 0;
+            width: 0;
+        }
+        a:hover::before {
+            width: 100%;
+            color: white;
+        }
+    </style>
+</head>
+<body class="flex h-screen bg-[#030303] flex-col items-center justify-center">
+    <img class="w-[1000px]" src="/images/360_F_101974188_JmL9UeRv9Vr5Xgy2mLYDy0p1cCKvixes-removebg-preview.png" alt="">
+    <a href="/" class="fixed hover:text-white transition-[.5s] hover:border-[transparent]">
+        Go to Youtube
+    </a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div class="upload_short_box flex flex-col w-1/2 h-[90%] rounded-lg bg-zinc-900">
+    <div class="p-4 flex items-center justify-between">
+        <h1>Upload Short</h1>
+        <button type="button" class="close_btn_3 ri-close-line"></button>
+    </div>
+    <hr class="bg-zinc-800 border-none h-[1px] w-full">
+    <input type="file" class="upload_short hidden">
+    <div class="w-full cursor-pointer h-full gap-5 flex items-center justify-center flex-col">
+        <div class="w-[200px] h-[200px] text-[100px] bg-zinc-800 rounded-full flex items-center justify-center">
+            <i class="ri-upload-line text-zinc-400"></i>
+        </div>
+        <button class="select_short_btn bg-blue-600 py-3 px-6 rounded-full">
+            Select File
+        </button>
+    </div>
+</div>
+<script>
+document.querySelector('.close_btn_3').addEventListener('click', () => {
+        document.querySelector('.upload_short_box_main').classList.remove('open_box')
+    })
+</script>

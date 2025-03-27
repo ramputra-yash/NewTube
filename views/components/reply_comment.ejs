@@ -1,0 +1,23 @@
+<style>
+    input {
+        transition: .5s;
+    }
+    input:focus {
+        border-color: white;
+    }
+    .comment_box_btn.active {
+        display: block;
+    }
+</style>
+<div class="flex w-full gap-3" style="padding: 10px;">
+    <img class="w-[40px] h-[40px] rounded-full" src="<%= user.logoURL %>" alt="">
+    <form action="/watch/<%= video._id%>/comment/<%= item._id %>/reply" method="post" class="w-full flex flex-col items-end">
+        <input type="text" name="reply_comment" style="padding: 8px;" class="input_text w-full border-b-1 border-zinc-800 outline-none" placeholder="Add Comment">
+        <div class="comment_box_btn flex gap-3" style="margin-top: 10px;">
+            <button type="submit" class="bg-blue-500 rounded-full hover:bg-blue-700 cursor-pointer" style="padding: 8px 15px;" type="button">Comment</button>
+        </div>
+    </form>
+</div>
+<script>
+
+</script>

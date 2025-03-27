@@ -1,0 +1,60 @@
+<style>
+    .reply_comment_box {
+        display: none;
+    }
+    .reply_comment_box.active {
+        display: block;
+    }
+    .reply_comment_btn.active i:nth-child(2) {
+        transform: rotate(180deg);
+    }
+</style>
+<div class="flex gap-2" style="padding: 10px; margin-top: 20px;">
+    <img class="w-[40px] object-cover h-[40px] rounded-full" src="<%= item.channel.logoURL %>" alt="">
+    <div class="flex flex-col w-full">
+        <div class="flex items-center gap-2">
+            <p>@<%= item.channel.handle %></p>
+            <span class="text-sm" style="color: #ccc;"><%= getTimestamp(item.postedDate) %></span>
+        </div>
+        <h1>
+            <%= item.text %>
+        </h1>
+        <div class="parent flex gap-4 items-center" style="padding: 5px;margin-top: 10px;">
+            <div>
+                <a href="/watch/<%= video._id %>/comment/<%= item._id %>/like">
+                    <% if(item.likes.includes(user._id)) { %>
+                        <i class="ri-thumb-up-fill text-blue-500"></i>
+                    <% } else { %>
+                        <i class="ri-thumb-up-line"></i>
+                    <% } %>
+                </a>
+                <%= item.likes.length %>
+            </div>
+            <a href="/watch/<%= video._id %>/comment/<%= item._id %>/dislike">
+                <% if(item.dislikes.includes(user._id)) { %>
+                    <i class="ri-thumb-down-fill text-red-500"></i>
+                <% } else { %>
+                    <i class="ri-thumb-down-line"></i>
+                <% } %>
+            </a>
+            <button type="button" class="reply_comment_btn hover:bg-zinc-900 flex gap-2 bg-zinc-800 cursor-pointer rounded-full" style="padding: 5px 15px;">
+                <i class="ri-reply-fill pointer-events-none"></i>
+                Reply
+                <i class="ri-arrow-down-s-line pointer-events-none transition-all" style="color: #ccc;"></i>
+            </button>
+        </div>
+        <div class="reply_comment_box w-full">
+            <%- include('reply_comment', { user, video, item }) %>
+        </div>
+        <% if(!item.replies.length < 1) { %>
+            <button type="button" class="replies_btn mt-3 flex gap-2 cursor-default rounded-full" style="padding: 5px 15px;">
+                <%= item.replies.length %> Replies
+            </button>
+        <% } %>
+        <div class="all_reply">
+            <% item.replies.reverse().forEach((reply_com_data) => { %>
+                <%- include('reply_com', { reply_com_data }) %>
+            <% }) %>
+        </div>
+    </div>
+</div>

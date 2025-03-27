@@ -1,0 +1,23 @@
+<div class="all_comments flex flex-col gap-2" style="margin-bottom: 200px;">
+    <% comments.reverse().forEach((item) => { %>
+        <%- include('comment', { item ,getTimestamp, user, video }) %>
+    <% }) %>
+</div>
+<script>
+    const allComments = document.querySelectorAll('.all_comments div');
+    allComments.forEach((item) => {
+        item.addEventListener('click', (e) => {
+            e.target.parentElement.nextElementSibling.classList.toggle('active');
+            e.target.classList.toggle('active');
+        })
+    })
+
+    const allReplies = document.querySelectorAll('.all_reply div');
+    allReplies.forEach((item) => {
+        item.addEventListener('click', (e) => {
+            e.target.nextElementSibling.classList.toggle('active');
+            e.target.classList.toggle('active');
+        })
+    })
+
+</script>

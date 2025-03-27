@@ -1,0 +1,181 @@
+<style>
+    @media (max-width:1000px) {
+        nav .youtube_logo {
+            display: none;
+        }
+    }
+    @media (max-width:800px) {
+        nav .create_video_btn, nav .notification_btn {
+            display: none;
+        }
+    }
+    @media (max-width:700px) {
+        nav {
+            padding: 0 10px;
+        }
+        nav .search_box form {
+            width: 250px;
+        }
+    }
+</style>
+<nav class="fixed border-b-1 backdrop-blur-lg bg-[#1b1b1b7e] border-black flex justify-between items-center w-full h-[70px]" style="z-index: 10;">
+    <a href="/" class="youtube_logo">
+        <img class="w-[130px]" src="../images/Screenshot_2025-03-11_114406-removebg-preview.png" alt="">
+    </a>
+    <div class="search_box flex gap-3">
+        <form action="/search" method="get" class="search w-[500px] overflow-hidden flex h-[40px] rounded-lg bg-zinc-800">
+            <input type="text" name="q" class="searchInput w-full outline-none bg-zinc-800" placeholder="Search">
+            <button type="submit" class="cursor-pointer bg-[#1b1b1b] w-[45px] rounded-lg border-[2px] border-zinc-800">
+                <i class="ri-search-line"></i>
+            </button>
+        </form>
+        <div class="voiceSearchBtn cursor-pointer hover:bg-[#1b1b1b] transition-all flex items-center justify-center w-[40px] h-[40px] rounded-lg bg-zinc-800">
+            <i class="ri-mic-fill"></i>
+        </div>
+        <%- include('voice_seach') %>
+    </div>
+    <div>
+        <% if(user) { %>
+            <div class="flex gap-5">
+                <div class="create_video_btn h-[38px] cursor-pointer w-[110px] rounded-lg border-2 border-zinc-800 flex items-center gap-2 hover:bg-zinc-800 transition-all justify-center block">
+                    <i class="ri-video-add-fill"></i>
+                    Create
+                </div>
+                <div style="display: none;" class="upload_box absolute bg-zinc-800 gap-2 flex flex-col p-4 top-[70px] rounded-lg">
+                    <a href="/studio/channel/<%= user.handle %>/" class="video_btn hover:bg-zinc-700/50 transition-all p-2 px-4 rounded-lg">Upload a video</a>
+                    <hr class="bg-zinc-700 h-[1px] w-full border-none outline-none">
+                    <a class="cursor-not-allowed short_btn transition-all p-2 px-4 rounded-lg">Upload a short <br> <span class="text-xs text-red-500">This not available</span> </a>
+                </div>
+                <button type="button" class="notification_btn relative cursor-pointer hover:bg-zinc-800 h-[40px] w-[40px] flex items-center justify-center border-2 border-zinc-800 rounded-lg">
+                    <i class="ri-notification-4-fill"></i>
+                    <% if(user.notifications.length === 0) { %>
+                        <span></span>
+                    <% } else { %>
+                        <span class="absolute text-[10px] bg-red-500 h-[20px] w-[20px] rounded-full flex items-center justify-center -top-2 -right-2"><%= user.notifications.length %></span>
+                    <% } %>
+                </button>
+                <%- include('notification', { user ,getTimestamp}) %>
+                <button type="button" class="profile_button">
+                    <img class="w-[40px] object-cover h-[40px] rounded-full cursor-pointer hover:border-1 transition-all border-blue-500" src="<%= user.logoURL %>" alt="">
+                </button>
+                <div class="profile_box -right-[100%] top-[80px] transition-all fixed">
+                    <%- include('profile_box', { user }) %>
+                </div>
+            </div>
+        <% } else { %>
+            <a href="/auth/google" class="h-[38px] w-[100px] rounded-lg border-2 border-zinc-800 flex items-center gap-1 hover:bg-zinc-800 transition-all justify-center block">
+                <i class="ri-user-line"></i>
+                Sign in
+            </a>
+        <% } %>
+    </div>
+</nav>
+
+<script>
+    const profile_button = document.querySelector('.profile_button');
+    const profile_box = document.querySelector('.profile_box');
+    profile_button.addEventListener('click', () => {
+        profile_box.classList.toggle('active');
+    })
+
+    document.querySelector('.notification_btn').addEventListener('click', () => {
+        document.querySelector('.notification_box').classList.toggle('active');
+    })
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.notification_btn') &&!event.target.closest('.notification_box')) {
+            document.querySelector('.notification_box').classList.remove('active');
+        }
+    })
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.profile_button') &&!event.target.closest('.profile_box')) {
+            profile_box.classList.remove('active');
+        }
+    })
+
+    document.querySelector('.create_video_btn').addEventListener('click', () => {
+        document.querySelector('.upload_box').style.display = "flex";
+    })
+
+    document.addEventListener('click', (event) => {
+        if(!event.target.closest('.upload_box') && !event.target.closest('.create_video_btn')) {
+            document.querySelector('.upload_box').style.display = "none";
+        }
+    })
+
+    const video_btn = document.querySelector('.video_btn');
+    const short_btn = document.querySelector('.short_btn');
+
+    video_btn.addEventListener('click', () => {
+        localStorage.setItem('video_upload_check', true);
+        localStorage.setItem('short_upload_check', "");
+    })
+
+    short_btn.addEventListener('click', () => {
+        localStorage.setItem('short_upload_check', true);
+        localStorage.setItem('video_upload_check', "");
+    })
+
+
+    const searchInput = document.querySelector('.searchInput');
+    const voiceSearchBtn = document.querySelector('.voiceSearchBtn');
+    const voicePopup = document.querySelector('.voicePopup');
+    const recognizedText = document.getElementById('recognizedText');
+    const closePopup = document.querySelector('.closePopup');
+
+    // Check if speech recognition is supported
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("Speech recognition not supported in your browser.");
+    } else {
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US'; // Set the language (change for other languages)
+        recognition.interimResults = false; // Capture only final result
+
+        // Open popup and start voice recognition
+        voiceSearchBtn.addEventListener('click', () => {
+            voicePopup.style.display = 'flex'; // Show popup
+            recognizedText.textContent = 'Listening...';
+            recognition.start();
+        });
+
+        // Capture speech result
+        recognition.onresult = (event) => {
+            const speechResult = event.results[0][0].transcript;
+            recognizedText.textContent = `Recognized: ${speechResult}`;
+
+            // Automatically fill input with recognized speech
+            searchInput.value = speechResult;
+
+            // Auto-close after 2 seconds
+            setTimeout(() => {
+                voicePopup.style.display = 'none';
+                document.querySelector('form').submit();
+            }, 2000);
+
+        };
+
+        // Handle recognition end
+        recognition.onend = () => {
+            if (voicePopup.style.display === 'block') {
+                recognizedText.textContent = "Click again to try!";
+            }
+        };
+
+        // Handle errors
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error:", event.error);
+            recognizedText.textContent = "❌ Error occurred. Try again.";
+        };
+    }
+
+    // Close popup manually
+    closePopup.addEventListener('click', () => {
+        voicePopup.style.display = 'none';
+        recognition.stop();
+    });
+
+
+</script>

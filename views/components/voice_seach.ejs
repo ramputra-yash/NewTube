@@ -1,0 +1,29 @@
+<style>
+    .voice_seach {
+        background: #3B82F6;
+        animation: voice linear infinite 2s;
+    }
+
+    @keyframes voice {
+        0% {
+            background: #3B82F6;
+        }
+        50% {
+            background: #0048bb;
+        }
+        100%{
+            background: #3B82F6;
+        }
+    }
+
+</style>
+<div class="voicePopup main fixed bg-zinc-800 gap-6 w-[500px] h-[300px] rounded-lg flex items-center justify-center flex-col top-[80px] backdrop-blur-lg" style="z-index: 20;box-shadow: 0 0 30px rgb(0, 0, 0);display: none; ">
+    <div class="voice_seach h-[70px] flex items-center justify-center rounded-full text-2xl w-[70px]">
+        <i class="ri-mic-fill"></i>
+    </div>
+    <p id="recognizedText">Listening...</p>
+    <button type="button" class="closePopup absolute bottom-5 right-5 bg-red-500 px-6 py-2 rounded-full">Cancel</button>
+</div>
+<script>
+
+</script>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Studio | Customization </title>
+    <style>
+            * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Century Gothic";
+        color: white;
+    }
+    body {
+        background: #1b1b1b;
+    }
+    body::-webkit-scrollbar {
+        background: #1b1b1b;
+        width: 10px;
+        border-left: 1px solid black;
+    }
+    body::-webkit-scrollbar-thumb {
+        background-color: rgb(54, 54, 54);
+        border-radius: 2px;
+        border-left: 1px solid black;
+    }
+    nav {
+        padding: 0 2%;
+    }
+    nav input {
+        padding: 0 15px;
+        border-bottom: none;
+    }
+    .profile_box.active {
+        right: 10px;
+    }
+    .videos, .shorts {
+        border-bottom: 5px solid transparent;
+    }
+    .videos.active, .shorts.active {
+        background: #27272A;
+        border-bottom: 5px solid #3B82F6;
+    }
+    .view_channel::before, .publish_btn::before {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        border-radius: 100px;
+        transition: .5s;
+        width: 0;
+        z-index: -1;
+        left: 0;
+    }
+    .view_channel::before {
+        background: #16A34A;
+    }
+    .publish_btn::before {
+        background: #3B82F6;
+    }
+    .view_channel:hover::before, .publish_btn:hover::before {
+        width: 100%;
+        transition: .5s;
+        color: white;
+    }
+    .view_channel, .publish_btn {
+        transition: .5s;
+    }
+    .view_channel:hover, .publish_btn:hover {
+        background: none;
+    }
+    .bannerImage_box .bannerImage_upload {
+        visibility: hidden;
+        opacity: 0;
+    }
+    .bannerImage_box:hover .bannerImage_upload {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .logoImage_box .logoImage_upload {
+        display: none;
+    }
+    /* .logoImage_box:hover .logoImage_upload {
+        visibility: visible;
+        opacity: 1;
+    } */
+    </style>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <%- include('../studio_components/navbar') %>
+    <div class="flex">
+        <%- include('../studio_components/studio_sidebar') %>
+        <div class="w-full flex flex-col h-screen">
+            <form action="/studio/channel/<%= user.handle %>/customization/edit" method="post" enctype="multipart/form-data" class="w-full flex flex-col h-screen pt-[80px] pl-[20px] pr-[20px]">
+
+                <h1 class="text-2xl font-semibold">Channel Customization</h1>
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="flex gap-3">
+                        <div class="videos active px-4 hover:bg-zinc-800 transition-all active cursor-pointer py-2">Profile</div>
+                    </div>
+                    <div class="flex gap-3">
+                        <a class="view_channel relative overflow-hidden flex items-center justify-center bg-zinc-800 py-2 px-6 rounded-full" href="/channel/<%= user.handle %>">View your Channel</a>
+                        <button type="submit" class="publish_btn relative overflow-hidden flex items-center justify-center bg-zinc-800 py-2 px-6 rounded-full">Publish</button>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-4 gap-5">
+                    <div class="w-full bannerImage_box relative rounded-[20px] overflow-hidden">
+                        <img class="banner-img w-full h-[200px] object-cover" src="<%= user.bannerImageURL || '/images/banner Image Template.avif' %>" alt="Banner">
+                        <div class="bannerImage_upload absolute bg-zinc-800/50 cursor-pointer w-full flex items-center justify-center h-full top-0">
+                            <i class="ri-upload-cloud-2-line text-7xl"></i>
+                        </div>
+                    </div>
+                    <input id="bannerImage" name="bannerImageURL" type="file" style="display: none;">
+                    <div class="flex gap-8">
+                        <div class="w-[200px] h-[200px] bannerImage_box relative rounded-full overflow-hidden">
+                            <img class="w-full logo-img object-cover w-[200px] h-[200px]" name="logoURL" src="<%= user.logoURL %>" alt="">
+                            <div id="logoImage_upload" class="bannerImage_upload absolute bg-zinc-800/50 cursor-pointer w-full flex items-center justify-center h-full top-0">
+                                <i class="ri-upload-cloud-2-line text-5xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                <p class="text-zinc-500">Channel Name</p>
+                                <input type="text" name="channelname" class="bg-[transparent] border-b-2 border-zinc-800 focus:border-[#3B82F6] transition-[.5s] outline-none p-2 text-5xl" value="<%= user.name %>" placeholder="Channel Name">
+                            </div>
+                            <div class="w-full">
+                                <p class="text-zinc-500">Channel handle</p>
+                                <input type="text" name="handle" readonly class="bg-[transparent] cursor-not-allowed w-full border-b-2 border-zinc-800 select-none transition-[.5s] outline-none p-2 text-xl" value="<%= user.handle %>">
+                            </div>
+                            <div class="w-full">
+                                <p class="text-zinc-500">Description</p>
+                                <textarea class="w-full bg-[transparent] p-2 resize-none border-b-2 border-zinc-800 focus:border-[#3B82F6] outline-none" name="description" rows="4" placeholder="Add your channel's Description" id=""><%= user.description %></textarea>
+                            </div>
+                        </div>
+                        <input id="logoImage" name="logoURL" type="file" style="display: none;">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    const bannerImage = document.querySelector('.bannerImage_upload');
+    const logoImage = document.querySelector('#logoImage_upload');
+
+    bannerImage.addEventListener('click', () => {
+        document.querySelector('#bannerImage').click();
+    })
+
+    logoImage.addEventListener('click', () => {
+        document.querySelector('#logoImage').click();
+    })
+
+    document.querySelector('#bannerImage').addEventListener('change', () => {
+        const file = document.querySelector('#bannerImage').files[0];
+        
+        if (file) {
+            const reader = new FileReader(); // ❌ Yahan argument mat dijiye
+            reader.onload = (e) => {
+                document.querySelector('.banner-img').src = e.target.result;
+            };
+            reader.readAsDataURL(file); // ✅ File read karne ke liye yeh method zaroori hai
+        }
+    });
+
+    document.querySelector('#logoImage').addEventListener('change', () => {
+        const file = document.querySelector('#logoImage').files[0];
+        
+        if (file) {
+            const reader = new FileReader(); // ❌ Yahan argument mat dijiye
+            reader.onload = (e) => {
+                document.querySelector('.logo-img').src = e.target.result;
+            };
+            reader.readAsDataURL(file); // ✅ File read karne ke liye yeh method zaroori hai
+        }
+    });
+
+</script>
+</html>

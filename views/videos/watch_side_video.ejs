@@ -1,0 +1,22 @@
+<style>
+    .side_video_title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        color: white;
+        white-space: break-spaces;
+        cursor: pointer;
+    }
+</style>
+<a href="/watch/<%= item._id %>" class="flex gap-3">
+    <video class="w-[45%] rounded-lg" src="../videos/<%= item.filename %>"></video>
+    <div class="w-[55%] flex flex-col justify-between">
+        <h1 class="side_video_title"><%= item.title %></h1>
+        <div>
+            <p class="text-sm" style="color: #a0a0a0;"><%= item.channel.name %></p>
+            <span class="text-sm" style="color: #a0a0a0;"><%= item.viewsCount.length %> views • <%= getTimestamp(item.createdAt) %></span>
+        </div>
+    </div>
+</a>

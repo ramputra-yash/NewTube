@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube | Studio</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Century Gothic";
+        color: white;
+    }
+    body {
+        background: #1b1b1b;
+    }
+    body::-webkit-scrollbar, .dashboard_box::-webkit-scrollbar {
+        background: #1b1b1b;
+        width: 10px;
+        border-left: 1px solid black;
+    }
+    body::-webkit-scrollbar-thumb, .dashboard_box::-webkit-scrollbar-thumb {
+        background-color: rgb(54, 54, 54);
+        border-radius: 2px;
+        border-left: 1px solid black;
+    }
+    nav {
+        padding: 0 2%;
+    }
+    nav input {
+        padding: 0 15px;
+        border-bottom: none;
+    }
+    .profile_box.active {
+        right: 10px;
+    }
+    .dashboard_box {
+        overflow-y: scroll;
+        height: 750px;
+    }
+    .dashboard_box_content {
+        margin-top: 20px;
+        column-count: 3;
+        width: 100%;
+        column-gap: 16px;
+    }
+    .dashboard_box_content div {
+        background: none;
+        border-radius: 12px;
+        padding: 20px;
+        border: 2px solid #686868;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        break-inside: avoid;
+    }
+    .upload_video_box_main {
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s;
+        transform: scale(0);
+        transform-origin: top right;
+    }
+    .upload_video_box_main.open_box {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    }
+    .upload_short_box_main {
+        opacity: 0;
+        visibility: hidden;
+        transition: .3s;
+        transform: scale(0);
+        transform-origin: top right;
+    }
+    .upload_short_box_main.open_box {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+    }
+    </style>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <%- include('studio_components/navbar', {user, getTimestamp : getTimeStamp}) %>
+    <div class="flex">
+        <%- include('studio_components/studio_sidebar') %>
+        <div class="dashboard_box pt-[80px] pl-[20px] pr-[10px] w-full ">
+            <%- include('studio_components/video_upload') %>
+            <%- include('studio_components/short_upload') %>
+            <div class="flex items-center justify-between">
+                <h1 class="text-2xl font-semibold">Channel Dashboard</h1>
+                <div class="flex items-center gap-3">
+                    <span title="Upload a video" class="upload_video_btn h-[40px] flex items-center justify-center rounded-full border-2 border-zinc-400 hover:border-white cursor-pointer transition-all w-[40px]">
+                        <i class="ri-video-upload-line"></i>
+                    </span>
+                    <a href="/studio/channel/<%= user.handle %>/customization" class="h-[40px] flex items-center justify-center rounded-full border-2 border-zinc-400 hover:border-white cursor-pointer transition-all w-[40px]">
+                        <i class="ri-edit-2-fill"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard_box_content">
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe excepturi quod pariatur? Adipisci error fugiat dolor autem ipsam natus officia mollitia, excepturi vitae sint nisi quod iure animi harum voluptatem.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector('.upload_video_btn').addEventListener('click', () => {
+        document.querySelector('.upload_video_box_main').classList.add('open_box')
+    })
+    document.querySelector('.upload_short_btn').addEventListener('click', () => {
+        document.querySelector('.upload_short_box_main').classList.add('open_box')
+    })
+</script>
+</html>

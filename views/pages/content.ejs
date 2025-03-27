@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Studio | Content </title>
+    <style>
+            * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Century Gothic";
+        color: white;
+    }
+    body {
+        background: #1b1b1b;
+    }
+    body::-webkit-scrollbar {
+        background: #1b1b1b;
+        width: 10px;
+        border-left: 1px solid black;
+    }
+    body::-webkit-scrollbar-thumb {
+        background-color: rgb(54, 54, 54);
+        border-radius: 2px;
+        border-left: 1px solid black;
+    }
+    nav {
+        padding: 0 2%;
+    }
+    nav input {
+        padding: 0 15px;
+        border-bottom: none;
+    }
+    .profile_box.active {
+        right: 10px;
+    }
+    .videos, .shorts {
+        border-bottom: 5px solid transparent;
+    }
+    .videos.active, .shorts.active {
+        background: #27272A;
+        border-bottom: 5px solid #3B82F6;
+    }
+    </style>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+    />
+</head>
+<body>
+    <%- include('../studio_components/navbar') %>
+    <div class="flex">
+        <%- include('../studio_components/studio_sidebar') %>
+        <div class="w-full flex flex-col h-screen pt-[80px] pl-[20px] pr-[20px]">
+            <h1 class="text-2xl font-semibold">Channel Content</h1>
+            <div class="mt-4 flex gap-3">
+                <div class="videos px-4 hover:bg-zinc-800 transition-all active cursor-pointer py-2">Videos</div>
+                <div class="shorts px-4 hover:bg-zinc-800 transition-all cursor-pointer py-2">Shorts</div>
+            </div>
+            <div class="content_data_video_box" style="display: block;">
+                <%- include('../studio_components/videos_box', { videos }) %>
+            </div>
+            <div class="content_data_shorts_box" style="display: none;">
+                <%- include('../studio_components/shorts_box') %>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('.videos').addEventListener('click', () => {
+            document.querySelector('.videos').classList.add('active');
+            document.querySelector('.shorts').classList.remove('active');
+            document.querySelector('.content_data_video_box').style.display = "block";
+            document.querySelector('.content_data_shorts_box').style.display = "none";
+        })
+        document.querySelector('.shorts').addEventListener('click', () => {
+            document.querySelector('.shorts').classList.add('active');
+            document.querySelector('.videos').classList.remove('active');
+            document.querySelector('.content_data_shorts_box').style.display = "block";
+            document.querySelector('.content_data_video_box').style.display = "none";
+        })
+    </script>
+</body>
+</html>

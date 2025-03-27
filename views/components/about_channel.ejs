@@ -1,0 +1,63 @@
+<div class="w-full transition-all top-0 flex items-center justify-center right-0 h-full fixed z-3 bg-zinc-800/50 backdrop-blur-sm" style="z-index: 10;">
+    <div class="about_box min-w-[500px] h-[auto] bg-zinc-900 rounded-lg" style="padding: 20px 30px;">
+        <div class="flex w-full items-center justify-between">
+            <h1 class="text-xl font-semibold">About</h1>
+            <span class="close_btn cursor-pointer">
+                <i class="ri-close-line text-xl"></i>
+            </span>
+        </div>
+        <h1 class="text-xl font-semibold border-b-1 border-zinc-800" style="padding: 20px 15px; padding-bottom: 10px;">Channel Details</h1>
+        <div class="flex flex-col gap-2" style="margin-top: 10px;">
+            <a href="" class="about_channel_link flex items-center gap-2">
+                <i class="text-2xl ri-global-line"></i>
+                <p>
+                    www.youtube.com/@YogeshSharma-gu2dm
+                </p>
+            </a>
+            <p class="flex items-center gap-2">
+                <i class="text-2xl ri-video-line"></i>
+                <%= user.videos.length %> Video
+            </p>
+            <p class="flex items-center gap-2">
+                <i class="text-2xl ri-bar-chart-grouped-line"></i>
+                    <% let totalViewsLength = 0; %>
+                    <% for (let i = 0; i < videos.length; i++) { %>
+                      <% if (Array.isArray(videos[i].viewsCount)) { %>
+                        <% totalViewsLength += videos[i].viewsCount.length; %>
+                        <% i + 1 %><% videos[i].viewsCount.length %>
+                      <% } else { %>
+                        <% i + 1 %>
+                      <% } %>
+                    <% } %>                  
+                    <%= totalViewsLength %>
+            </p>
+            <p class="flex items-center gap-2">
+                <i class="text-2xl ri-information-line"></i>
+                Joined : <%= user.createdDate.toISOString().split('T')[0] %>
+            </p>
+            <a class="copy_channel_link cursor-pointer bg-zinc-800 w-[fit-content] rounded-full" style="padding: 10px 20px; margin-top: 20px;">Copy Channel Link</a>
+        </div>
+    </div>
+</div>
+<script>
+
+    const closeBtn = document.querySelector('.close_btn');
+    closeBtn.addEventListener('click', () => {
+        document.querySelector('.about_box').parentElement.parentElement.style.display = 'none';
+    });
+
+    document.querySelector('.about_channel_link p').textContent = window.location.href;
+    document.querySelector('.about_channel_link').href = window.location.href;
+    document.querySelector('.about_channel_link').target = "_blank";
+
+    document.querySelector('.copy_channel_link').addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href)
+        .then(() => {
+            document.querySelector('.copy_channel_link').style.backgroundColor = "green";
+            document.querySelector('.copy_channel_link').textContent = "Link Copied ✔";
+        })
+        .catch(err => alert('Something went wrong with the clipboard ! '));
+    })
+
+
+</script>

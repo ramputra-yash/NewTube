@@ -1,0 +1,23 @@
+<style>
+    .reply_comment_box {
+        display: none;
+    }
+    .reply_comment_box.active {
+        display: block;
+    }
+    .replies_btn.active i:nth-child(2) {
+        transform: rotate(180deg);
+    }
+</style>
+<div class="flex gap-2" style="padding: 10px; margin-top: 20px;">
+    <img class="w-[40px] object-cover h-[40px] rounded-full" src="<%= reply_com_data.channel.logoURL %>" alt="">
+    <div class="flex flex-col w-full">
+        <div class="flex items-center gap-2">
+            <p>@<%= reply_com_data.channel.handle %></p>
+            <span class="text-sm" style="color: #ccc;"><%= getTimestamp(reply_com_data.postedDate) %></span>
+        </div>
+        <h1>
+            <%= reply_com_data.text %>
+        </h1>
+    </div>
+</div>

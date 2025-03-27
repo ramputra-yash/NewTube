@@ -1,0 +1,21 @@
+<div class="upload_video_box flex flex-col w-1/2 h-[90%] rounded-lg bg-zinc-900">
+    <div class="p-4 flex items-center justify-between">
+        <h1>Upload Video</h1>
+        <button type="button" class="close_btn_2 ri-close-line"></button>
+    </div>
+    <hr class="bg-zinc-800 border-none h-[1px] w-full">
+    <input type="file" name="video_upload_file" class="upload_file hidden">
+    <div class="w-full cursor-pointer h-full gap-5 flex items-center justify-center flex-col">
+        <div class="w-[200px] h-[200px] text-[100px] bg-zinc-800 rounded-full flex items-center justify-center">
+            <i class="ri-upload-line text-zinc-400"></i>
+        </div>
+        <button type="button" class="select_file_btn bg-blue-600 py-3 px-6 rounded-full">
+            Select File
+        </button>
+    </div>
+</div>
+<script>
+document.querySelector('.close_btn_2').addEventListener('click', () => {
+        document.querySelector('.upload_video_box_main').classList.remove('open_box')
+    })
+</script>

@@ -1,0 +1,42 @@
+<div class="profile min-w-[300px] overflow-hidden h-auto flex flex-col rounded-lg bg-zinc-800">
+    <div class="flex gap-3 border-zinc-700" style="padding: 20px;border-bottom: 1px solid #4d4d4d;">
+        <img class="w-[50px] object-cover h-[50px] rounded-full" src="<%= user.logoURL %>" alt="">
+        <div class="flex flex-col">
+            <h1 class="text-xl"><%= user.name %></h1>
+            <p class="text-sm" style="color:#a5a5a5">@<%= user.handle %></p>
+        </div>
+    </div>
+    <div class="w-full" style="padding: 10px;">
+        <a href="/channel/<%= user.handle %>" style="padding: 10px;" class="w-full flex items-center justify-center rounded-lg bg-blue-500 block">
+            View your channel
+        </a>
+    </div>
+    <div class="flex flex-col" style="padding: 10px;border-top: 1px solid #4d4d4d;border-bottom: 1px solid #4d4d4d;">
+        <a href="https://myaccount.google.com/" style="padding: 10px 15px;" class="flex items-center gap-3 w-full rounded-lg transition-all hover:bg-zinc-700/50">
+            <i class="ri-google-fill text-xl"></i>
+            Google Account
+        </a>
+        <a href="/auth/google" style="padding: 10px 15px;" class="flex items-center gap-3 w-full rounded-lg transition-all hover:bg-zinc-700/50">
+            <i class="ri-switch-line"></i>
+            Switch Account
+        </a>
+        <a href="/logout" style="padding: 10px 15px;" class="flex items-center gap-3 w-full rounded-lg transition-all hover:bg-zinc-700/50">
+            <i class="ri-logout-box-line"></i>
+            Sign out
+        </a>
+    </div>
+    <div class="flex flex-col" style="padding: 10px;border-bottom: 1px solid #4d4d4d;">
+        <a href="/studio/channel/<%= user.handle %>" style="padding: 10px 15px;" class="flex items-center gap-3 w-full rounded-lg transition-all hover:bg-zinc-700/50">
+            <i class="ri-play-circle-line"></i>
+            Youtube Studio
+        </a>
+        <a href="/" style="padding: 10px 15px;" class="flex items-center gap-3 w-full rounded-lg transition-all hover:bg-zinc-700/50">
+            <i class="ri-exchange-dollar-line"></i>
+            Purchase a Membership
+        </a>
+    </div>
+    <a href="/" style="padding: 15px 25px;" class="flex items-center gap-3 w-full transition-all hover:bg-zinc-700/50">
+        <i class="ri-settings-3-line"></i>
+        Settings
+    </a>
+</div>

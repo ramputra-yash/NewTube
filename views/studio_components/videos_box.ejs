@@ -1,0 +1,54 @@
+<style>
+.videos_box {
+    height: 600px;
+    overflow-y: scroll;
+}
+.videos_box::-webkit-scrollbar {
+    width: 0;
+}
+</style>
+<div class="videos_box border-t-2 border-zinc-800 pt-5 h-full">
+    <% videos.forEach((video) => { %>
+        <div class="flex gap-5 border-b-2 w-full border-zinc-800 py-4 cursor-default">
+            <video class="w-[180px] h-full rounded-lg object-cover" src="/videos/<%= video.filename %>"></video>
+            <div class="flex flex-col w-full justify-between">
+                <p><%= video.title %></p>
+                <div class="flex items-center justify-between">
+                    <div class="flex gap-[50px]">
+                    <div class="flex justify-center flex-col">
+                        <h1 class="text-sm text-zinc-400">Visiblity</h1>
+                        <p class="text-sm">Public ( always )</p>
+                    </div>
+                    <div class="flex justify-center flex-col">
+                        <h1 class="text-sm text-zinc-400">Date</h1>
+                        <p class="text-sm"> <%= getTimeStamp(video.createdAt) %> </p>
+                    </div>
+                    <div class="flex justify-center flex-col">
+                        <h1 class="text-sm text-zinc-400">Views</h1>
+                        <p class="text-sm"><%= video.viewsCount.length %></p>
+                    </div>
+                    <div class="flex justify-center flex-col">
+                        <h1 class="text-sm text-zinc-400">Comments</h1>
+                        <p class="text-sm"><%= video.comments.length %></p>
+                    </div>
+                    <div class="flex justify-center flex-col">
+                        <h1 class="text-sm text-zinc-400">Likes & Dislikes</h1>
+                        <p class="text-sm"><span class="text-blue-500"><%= video.likes.length %></span> • <span class="text-red-500"><%= video.dislikes.length %></span></p>
+                    </div>
+                </div>
+                <div class="flex gap-[30px] pr-[20px]">
+                    <a href="/watch/<%= video._id %>" class="hover:bg-zinc-800 transition-all h-[40px] w-[40px] flex items-center justify-center rounded-full text-2xl">
+                        <i class="ri-eye-line text-green-500"></i>
+                    </a>
+                    <a href="/studio/channel/<%= user.handle %>/content/<%= video._id %>/edit" class="hover:bg-zinc-800 transition-all h-[40px] w-[40px] flex items-center justify-center rounded-full text-2xl">
+                        <i class="ri-edit-2-fill text-blue-500"></i>
+                    </a>
+                    <a href="/studio/channel/<%= user.handle %>/content/<%= video._id %>/delete" class="hover:bg-zinc-800 transition-all h-[40px] w-[40px] flex items-center justify-center rounded-full text-2xl">
+                        <i class="ri-delete-bin-6-line text-red-500"></i>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>

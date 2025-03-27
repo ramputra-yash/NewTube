@@ -1,0 +1,41 @@
+<style>
+    .notification_box::-webkit-scrollbar {
+        width: 10px;
+        background: none;
+    }
+    .notification_box::-webkit-scrollbar-thumb {
+        background: rgb(78, 78, 78);
+        border-radius: 10px;
+    }
+    .notification_box {
+        opacity: 0;
+        visibility: hidden;
+        width: 400px;
+        transform: scale(0);
+        transform-origin: top;
+        transition: 0.2s
+    }
+    .notification_box.active {
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
+<div class="notification_box fixed max-h-[500px] overflow-y-scroll bg-zinc-800 flex flex-col gap-2 top-[80px] p-4 rounded-lg right-[20px]" style="box-shadow: 0 0 20px rgb(22, 22, 22);">
+    <% if(user.notifications.length === 0) { %>
+        <h1 class="text-center font-semibold">No Notifications Yet</h1>
+    <% } else { %>
+    <% user.notifications.forEach((noti) => { %>
+        <a href="/watch/<%= noti.videoId %>/<%= noti._id %>" class="flex flex-col bg-zinc-800 hover:bg-zinc-700/50 rounded-lg px-2 cursor-pointer">
+            <button class="flex gap-2 p-2 rounded-lg cursor-pointer">
+                    <img class="w-[40px] rounded-full h-[40px]" src="<%= user.logoURL %>" alt="">
+                    <div>
+                        <h1 class="text-left"><%= noti.message %></h1>
+                        <p class="text-sm text-left text-zinc-400"><%= getTimestamp(noti.createdAt) %></p>
+                    </div>
+            </button>
+        </a>
+    <% }) %>
+    <% } %>
+
+</div>
