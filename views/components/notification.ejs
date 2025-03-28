@@ -28,7 +28,6 @@
     <% user.notifications.forEach((noti) => { %>
         <a href="/watch/<%= noti.videoId %>/<%= noti._id %>" class="flex flex-col bg-zinc-800 hover:bg-zinc-700/50 rounded-lg px-2 cursor-pointer">
             <button class="flex gap-2 p-2 rounded-lg cursor-pointer">
-                    <img class="w-[40px] rounded-full h-[40px]" src="<%= user.logoURL %>" alt="">
                     <div>
                         <h1 class="text-left"><%= noti.message %></h1>
                         <p class="text-sm text-left text-zinc-400"><%= getTimestamp(noti.createdAt) %></p>
