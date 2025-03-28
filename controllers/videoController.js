@@ -1,5 +1,6 @@
 const Video = require('../models/Video')
 const Channel = require('../models/Channel')
+const cloudinary = require('cloudinary').v2;
 
 module.exports.uploadVideo = async (req, res) => {
     let { title, description } = req.body;
@@ -12,11 +13,16 @@ module.exports.uploadVideo = async (req, res) => {
             return res.status(404).send("User not found");
         }
 
+        const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
+            resource_type: "video",
+            folder: "user_videos"
+        });
+        
         // Naya video create karo
         const video = await Video.create({
-            videoId: req.file.filename + Date.now(),
+            videoId: cloudinaryResponse.public_id + Date.now(),
             title,
-            filename: req.file.filename,
+            filename: cloudinaryResponse.secure_url,
             uid: user._id + Date.now(),
             description,
             length: req.file.length,
