@@ -90,7 +90,6 @@
         <%- include('../components/navbar') %>
         <div class="w-full h-full">
             <div class="profile_page w-full h-full">
-                <%= otherUser.bannerImageURL %>
                 <% if(otherUser.bannerImageURL) { %>
                     <div class="w-full h-[200px] rounded-[20px] overflow-hidden bg-red-500">
                         <img class="w-full h-full object-cover bg-center" src="<%= otherUser.bannerImageURL %>" alt="">
