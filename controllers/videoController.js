@@ -1,45 +1,56 @@
-const Video = require('../models/Video')
-const Channel = require('../models/Channel')
+const Video = require('../models/Video');
+const Channel = require('../models/Channel');
 const cloudinary = require('cloudinary').v2;
 
 module.exports.uploadVideo = async (req, res) => {
     let { title, description } = req.body;
 
     try {
-        // Video upload karne wale user ka data
+        // User ka data fetch karein
         const user = await Channel.findOne({ handle: req.cookies.userhandle }).populate('subscribers');
 
         if (!user) {
             return res.status(404).send("User not found");
         }
 
-        const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
-            resource_type: "video",
-            folder: "user_videos"
+        // Cloudinary pe video upload karein
+        const uploadResult = await new Promise((resolve, reject) => {
+            const uploadStream = cloudinary.uploader.upload_stream(
+                { resource_type: "video", folder: "videos" },
+                (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            );
+            uploadStream.end(req.file.buffer);
         });
-        
-        // Naya video create karo
+
+        console.log("✅ Cloudinary Upload Successful:", uploadResult);
+
+        // Video save karein database me
         const video = await Video.create({
-            videoId: cloudinaryResponse.public_id + Date.now(),
+            videoId: uploadResult.public_id,  // Cloudinary se mila unique ID
             title,
-            filename: cloudinaryResponse.secure_url,
+            filename: uploadResult.secure_url, // Cloudinary ka video URL
             uid: user._id + Date.now(),
             description,
-            length: req.file.length,
+            length: req.file.size, // File ka size store karein
             channel: user._id,
         });
 
-        // Apne videos me push karo
+        // User ke videos me push karein
         user.videos.push(video._id);
         await user.save();
 
-        // Notification message
+        // Subscribers ke liye notification
         const notificationMessage = `${user.handle} uploaded a new video: ${title}`;
 
-        // Apne aap ko exclude karke subscribers ko filter karo
         const notifications = user.subscribers
-            .filter((subscriber) => !subscriber._id.equals(user._id)) // Apne aap ko exclude kar rahe hain
-            .map((subscriber) => ({
+            .filter(subscriber => !subscriber._id.equals(user._id))
+            .map(subscriber => ({
                 updateOne: {
                     filter: { _id: subscriber._id },
                     update: {
@@ -54,10 +65,11 @@ module.exports.uploadVideo = async (req, res) => {
                 },
             }));
 
-        // Subscribers ko notification bhejo (Bulk update for efficiency)
+        // Bulk update notifications
         if (notifications.length > 0) {
             await Channel.bulkWrite(notifications);
         }
+
         res.redirect('/channel/' + user.handle);
     } catch (error) {
         console.error("❌ Error uploading video:", error.message);
