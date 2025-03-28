@@ -10,7 +10,7 @@
 <div class="videos_box border-t-2 border-zinc-800 pt-5 h-full">
     <% videos.forEach((video) => { %>
         <div class="flex gap-5 border-b-2 w-full border-zinc-800 py-4 cursor-default">
-            <video class="w-[180px] h-full rounded-lg object-cover" src="/videos/<%= video.filename %>"></video>
+            <video class="w-[180px] h-full rounded-lg object-cover" src="<%= video.filename %>"></video>
             <div class="flex flex-col w-full justify-between">
                 <p><%= video.title %></p>
                 <div class="flex items-center justify-between">
