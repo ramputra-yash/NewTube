@@ -20,7 +20,7 @@
     }
 </style>
 <a href="/watch/<%= item._id %>" class="index_video flex flex-col">
-    <video class="h-[250] w-full object-cover rounded-lg" src="/videos/<%= item.filename %>"></video>
+    <video class="h-[250] w-full object-cover rounded-lg" src="<%= item.filename %>"></video>
     <div class="flex items-start gap-3" style="padding: 0 10px;margin-top: 10px;">
         <img class="w-[45px] object-cover rounded-full h-[45px]" src="<%= item.channel.logoURL %>" alt="">
         <div>
