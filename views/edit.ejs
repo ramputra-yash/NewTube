@@ -92,7 +92,7 @@
         <%- include('studio_components/studio_sidebar') %>
         <div class="dashboard_box pt-[90px] pl-[20px] pr-[10px] w-full ">
             <div class="flex gap-2 w-[100%]">
-                <video class="w-[400px] rounded-lg" autoplay controls src="/videos/<%= video.filename %>"></video>
+                <video class="w-[400px] rounded-lg" autoplay controls src="<%= video.filename %>"></video>
                 <form action="/studio/channel/<%= user.handle %>/content/<%= video._id %>/edit" method="post" class="flex w-full pt-1 gap-2 h-full flex-col">
                     <div class="w-full flex gap-2 h-[40px]">
                         <input placeholder="Video Title" value="<%= video.title %>" name="title" class="px-4 outline-none h-[40px] w-full bg-zinc-800 " type="text">
