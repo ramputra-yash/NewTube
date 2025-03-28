@@ -90,9 +90,11 @@
         <%- include('../components/navbar') %>
         <div class="w-full h-full">
             <div class="profile_page w-full h-full">
-                <div class="w-full h-[200px] rounded-[20px] overflow-hidden bg-red-500">
-                    <img class="w-full h-full object-cover bg-center" src="https://img.freepik.com/premium-vector/abstract-technology-background-white-blue-gradient-modern-futuristic-blue-background-news-report-banner-cover-design_115973-8810.jpg" alt="">
-                </div>
+                <% if(otherUser.bannerImageURL) { %>
+                    <div class="w-full h-[200px] rounded-[20px] overflow-hidden bg-red-500">
+                        <img class="w-full h-full object-cover bg-center" src="<%= otherUser.bannerImageURL %>" alt="">
+                    </div>
+                <% } %>
                 <div class="profile_page_det items-center gap-8 flex" style="padding: 20px 30px;">
                     <img class="w-[200px] object-cover rounded-full h-[200px]" src="<%= otherUser.logoURL %>" alt="">
                     <div class="flex flex-col gap-2">
