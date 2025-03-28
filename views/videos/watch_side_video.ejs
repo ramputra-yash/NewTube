@@ -11,7 +11,7 @@
     }
 </style>
 <a href="/watch/<%= item._id %>" class="flex gap-3">
-    <video class="w-[45%] rounded-lg" src="../videos/<%= item.filename %>"></video>
+    <video class="w-[45%] rounded-lg" src="<%= item.filename %>"></video>
     <div class="w-[55%] flex flex-col justify-between">
         <h1 class="side_video_title"><%= item.title %></h1>
         <div>
